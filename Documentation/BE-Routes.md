@@ -15,10 +15,10 @@
   * PUT /server/:serverId/channel/:channelId, update the channel with id
   * DELETE /server/:serverId/channel/:channelId, delete the channel with id
 * Messages
-  * DELETE /messages/:id, delete the response with id
+  * DELETE /messages/:id, delete the message with id
   * POST /messages, creates a new message
   * PUT /messages/:id, edits the message with id
   * PUT /messages/:id/pin pins the message with id
 * Reaction
-  * POST /message/:messageId, creates a response to a message
-  * DELETE /responses/:messageId, removes the response to the message
+  * POST /message/:messageId, creates a reaction to a message
+  * DELETE /responses/:messageId, removes the reaction to the message
