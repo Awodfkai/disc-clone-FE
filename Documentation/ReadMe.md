@@ -5,13 +5,16 @@
 * Servers
   * Create
   * Join
+  * Roles
+    * different permissions on server
   * Channels
     * create
     * delete
     * join
+    * different permissions for different roles
 * Groups
   * Create
-  * Join
+  * Add other users
   * Auto-created between individual users when sending a DM
 * Live text chat
   * in groups
