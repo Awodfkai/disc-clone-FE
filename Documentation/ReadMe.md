@@ -1,6 +1,7 @@
 # Read Me Discord Project
 
 ## Features
+
 * Servers
   * Create
   * Join
@@ -17,4 +18,5 @@
   * in channels
 
 ## Technologies
+
 * Socket.IO for live text chat
