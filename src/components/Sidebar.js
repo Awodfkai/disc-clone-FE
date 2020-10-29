@@ -5,32 +5,42 @@ function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-export default function Sidebar(props){
+const getServers = () => {
+
+}
+
+const renderServers = () => {
+
+}
+
+const Sidebar = (props) => {
   return (
     <div>
-      <List component="nav" aria-label="main mailbox folders">
+      <List component="nav">
         <ListItem button>
           <ListItemIcon>
             <div>Hello</div>
           </ListItemIcon>
-          <ListItemText primary="Inbox" />
+          <ListItemText primary="Example Server" />
         </ListItem>
+
         <ListItem button>
           <ListItemIcon>
             <div>world</div>
           </ListItemIcon>
-          <ListItemText primary="Drafts" />
+          <ListItemText primary="Example Server 2" />
         </ListItem>
-      </List>
-      <Divider />
-      <List component="nav" aria-label="secondary mailbox folders">
+
         <ListItem button>
-          <ListItemText primary="Trash" />
+          <ListItemText primary="Example Server 3" />
         </ListItem>
-        <ListItemLink href="#simple-list">
-          <ListItemText primary="Spam" />
+        
+        <ListItemLink href="#example-server-4">
+          <ListItemText primary="Example Server 4" />
         </ListItemLink>
       </List>
     </div>
   );
 }
+
+export default Sidebar

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment'
-import Message from '../../../Backend/db/models/message';
 
 const MessageList = () => {
   const currentChannel = useSelector(state => state.channels.currentChannel)
@@ -18,17 +17,17 @@ const MessageList = () => {
   if(!currentChannel){
     return;
   }
-  (async () => {
-    try {
-      //fetch messages
-    }catch(e){
-      console.error(e);
-    }
-  },[currentChannel, dispatch]);
+  // (async () => {
+  //   try {
+  //     //fetch messages
+  //   }catch(e){
+  //     console.error(e);
+  //   }
+  // },[currentChannel, dispatch]);
 
-  if(!currentChannel){
-    return null;
-  }
+  // if(!currentChannel){
+  //   return null;
+  // }
 
   const renderMessages = messages => {
     if(!messages){
@@ -53,3 +52,5 @@ const MessageList = () => {
     </ul>
   )
 }
+
+export default MessageList;
