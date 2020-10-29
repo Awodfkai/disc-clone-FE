@@ -10,4 +10,4 @@ const channelsReducer = (state=initialState, action) => {
   }
 }
 
-export default channelsReducer;
+export default channelsReducer

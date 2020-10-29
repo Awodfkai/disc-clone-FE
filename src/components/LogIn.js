@@ -7,23 +7,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box'; //used for copyright box
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -60,16 +47,20 @@ export default function LogIn({onChange}) {
   const onSubmit = e => {
     e.preventDefault();
     console.log('logging in...')
-    const res = await fetch('http://localhost:8000/api/user/log-in',
-      {
-        body: {
-          username,
-          password
+    try{
+      const res = await fetch('http://localhost:8000/api/user/log-in',
+        {
+          body: {
+            username,
+            password
+          }
         }
+      )
+      if(res.ok){
+        onChange(false)
       }
-    )
-    if(res.ok){
-      onChange(false)
+    }catch(e){
+      console.error(e);
     }
   }
 
@@ -132,9 +123,6 @@ export default function LogIn({onChange}) {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }
