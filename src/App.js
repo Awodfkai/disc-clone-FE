@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid'
 
@@ -14,7 +15,20 @@ const PrivateRoute = (props) => {
   }} />);
 }
 
-function App(props) {
+const App = (props) => {
+  const [needLogin, setNeedLogin] = useState(true);
+  // const socket = props.socket;
+  
+  const renderMessageView = () => {
+    if(currentChannel) {
+      return (
+        <div className='message-view'>
+          <MessageList />
+          <SendMessageForm onSend={onSend} />
+        </div>
+      )
+    }
+  }
 
   return (
     <Grid container spacing={1}>
@@ -22,13 +36,13 @@ function App(props) {
         <Sidebar />
       </Grid>
       <Grid container item xs={2}>
-        <div id='test' />
+        <div className='test' />
       </Grid>
       <Grid container item xs={6}>
-        <div id='test' />
+        <div className='test' />
       </Grid>
       <Grid container item xs={2}>
-        <div id='test' />
+        <div className='test' />
       </Grid>
     </Grid>
   )
