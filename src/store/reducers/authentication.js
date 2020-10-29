@@ -1,5 +1,3 @@
-// TODO Contain Redux-related auth handling:
-// actions, action types, thunks, reducers
 import { baseUrl } from '../../config'
 
 const SET_TOKEN = 'SET_TOKEN';

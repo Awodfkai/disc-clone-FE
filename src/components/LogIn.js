@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import {login} from '../store/reducers/authentication'
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LogIn({onChange}) {
+const LogIn = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('')
   const classes = useStyles();
@@ -47,23 +49,12 @@ export default function LogIn({onChange}) {
   const onSubmit = e => {
     e.preventDefault();
     console.log('logging in...')
-    try{
-      const res = await fetch('http://localhost:8000/api/user/log-in',
-        {
-          body: {
-            username,
-            password
-          }
-        }
-      )
-      if(res.ok){
-        onChange(false)
-      }
-    }catch(e){
-      console.error(e);
-    }
+    login(username, password)
   }
-
+  
+  if (props.token) {
+    return <Redirect to="/" />;
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -126,3 +117,22 @@ export default function LogIn({onChange}) {
     </Container>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    token: state.authentication.token,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (username, password) => dispatch(login(username, password))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  LogIn
+);
