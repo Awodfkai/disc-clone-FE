@@ -34,7 +34,7 @@ export const logout = () => {
 // thunk action creator
 export const login = (username, password) => async dispatch => {
   const response = await fetch(`${baseUrl}/user/log-in`, {
-    method: 'put',
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password }),
   })

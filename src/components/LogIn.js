@@ -73,7 +73,7 @@ const LogIn = (props) => {
   }
   
   if (props.token) {
-    return <Redirect to="/" />;
+    props.onChange(false)
   }
   return (
     <Container component="main" maxWidth="xs">
