@@ -93,7 +93,7 @@ const LogIn = (props) => {
             fullWidth
             id="username"
             label="Username"
-            name="email"
+            name="username"
             autoFocus
           />
           <TextField

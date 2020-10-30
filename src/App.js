@@ -23,8 +23,9 @@ const PrivateRoute = (props) => {
 
 const App = (props) => {
   const [needLogin, setNeedLogin] = useState(true);
-  // const currentChannel = useSelector(state => state.channels.currentChannel);
-  // const dispatch = useDispatch();
+  const currentServer = useSelector(state => state.servers.currentServer);
+  const joinedServers = useSelector(state => state.servers.joinedServers)
+  const dispatch = useDispatch();
   // const socket = props.socket;
   // const onSend = message => {
   //   console.log('sending message')

@@ -40,7 +40,7 @@ export const login = (username, password) => async dispatch => {
   })
   if (response.ok) {
     const { token, user } = await response.json();
-    localStorage.setItem(TOKEN_KEY, token)
+    localStorage.setItem(TOKEN_KEY, token.token)
     localStorage.setItem('user_id', user.id)
     dispatch(setToken(token))
   }

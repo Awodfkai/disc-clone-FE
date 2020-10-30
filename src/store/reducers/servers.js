@@ -2,36 +2,40 @@ import { baseUrl } from '../../config'
 
 const ADD_JOINED_SERVER = 'ADD_JOINED_SERVER';
 const SET_CURRENT_SERVER = 'SET_CURRENT_CHANNEL';
-const ADD_SERVER = 'ADD_SERVER';
+const ADD_SERVERS = 'ADD_SERVERS';
 
 const initialState = {
   servers: [],
   joinedServers: []
 }
 
-export const addServer = (server) => {
+export const addServers = (servers) => {
   return {
-    type: ADD_SERVER,
-    server
+    type: ADD_SERVERS,
+    servers
   }
 }
 
 export const createServer = (name, user_id) => async dispatch => {
+  const token = localStorage.getItem('tokenkey');
+  console.log('local storage token: ', token);
   const response = await fetch(`${baseUrl}/server/create`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Authorization':`Bearer ${token}` },
     body: JSON.stringify({ name, user_id }),
   })
   if (response.ok) {
     const { server } = await response.json();
-    dispatch(addServer(server))
+    dispatch(addServers(server))
   }
 }
+
+
 
 const serversReducer = (state=initialState, action) => {
   Object.freeze(state);
   switch(action.type) {
-    case ADD_SERVER:
+    case ADD_SERVERS:
       return { ...state, servers: action.servers}
     case SET_CURRENT_SERVER:
       return {...state, currentServer: action.server };
