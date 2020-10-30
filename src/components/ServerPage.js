@@ -4,7 +4,7 @@
 // import MessageList from './components/MessageList';
 // import SendMessageForm from './components/SendMessageForm';
 
-// const Server = (props) => {
+// const ServerPage = (props) => {
 //   const currentServer = useSelector(state.server.currentServer)
   
 //   const renderMessageView = () => {

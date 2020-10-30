@@ -39,8 +39,9 @@ export const login = (username, password) => async dispatch => {
     body: JSON.stringify({ username, password }),
   })
   if (response.ok) {
-    const { token } = await response.json();
+    const { token, user } = await response.json();
     localStorage.setItem(TOKEN_KEY, token)
+    localStorage.setItem('user_id', user.id)
     dispatch(setToken(token))
   }
 }
