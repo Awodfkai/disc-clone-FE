@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +13,7 @@ import Box from '@material-ui/core/Box'; //used for copyright box
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { json } from 'body-parser';
 
 import {login} from '../store/reducers/authentication'
 
@@ -26,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -49,7 +52,24 @@ const LogIn = (props) => {
   const onSubmit = e => {
     e.preventDefault();
     console.log('logging in...')
-    login(username, password)
+    props.logIn(username, password)
+    // const login = async (username, password) => {
+    //   try {
+    //     const res = await fetch('http://localhost:8000/api/user/log-in',
+    //       {
+    //         method:'put',
+    //         headers: {"Content-Type": "application/json"},
+    //         body: JSON.stringify({username, password})
+    //       }
+    //     )
+    //     if (res.ok) {
+    //       props.onChange(false)
+    //     }
+    //   } catch (e) {
+    //     console.error(e);
+    //   }
+    // }
+    // login(username, password);
   }
   
   if (props.token) {
@@ -126,7 +146,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (username, password) => dispatch(login(username, password))
+    logIn: (username, password) => dispatch(login(username, password))
   };
 };
 
@@ -136,3 +156,4 @@ export default connect(
 )(
   LogIn
 );
+// export default LogIn;

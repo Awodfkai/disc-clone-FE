@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid'
 import LogIn from './components/LogIn'
@@ -8,6 +8,7 @@ import SendMessageForm from './components/SendMessageForm';
 
 import Sidebar from './components/Sidebar'
 import { Socket } from 'socket.io-client';
+import { loadToken } from './store/reducers/authentication';
 
 const PrivateRoute = (props) => {
   return (<Route render={() => {
@@ -68,5 +69,15 @@ const App = (props) => {
   )
 
 }
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    needLogin: (!state.authentication.token || false)
 
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadToken: () => dispatch(loadToken()),
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)

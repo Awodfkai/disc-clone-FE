@@ -25,25 +25,23 @@ export const logout = () => {
     })
  
     if (res.ok) {
-      localStorage.removeItem('tokenkey')
+      localStorage.removeItem(TOKEN_KEY)
       dispatch(loseToken(token))
     }
   }
 }
 
 // thunk action creator
-export const login = (username, password) => {
-  return async dispatch => {
-    console.log("login fetch url", `${baseUrl}/user/log-in`)
-    const response = await fetch(`${baseUrl}/user/log-in`, {
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    })
-    if (response.ok) {
-      const { token } = await response.json();
-      localStorage.setItem(TOKEN_KEY, token)
-      dispatch(setToken(token))
-    }
+export const login = (username, password) => async dispatch => {
+  const response = await fetch(`${baseUrl}/user/log-in`, {
+    method: 'put',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password }),
+  })
+  if (response.ok) {
+    const { token } = await response.json();
+    localStorage.setItem(TOKEN_KEY, token)
+    dispatch(setToken(token))
   }
 }
 
@@ -60,6 +58,7 @@ export const loadToken = () => {
 export default function reducer(state = {}, action) {
   switch (action.type) {
     case SET_TOKEN: {
+      console.log('setting state token')
       return { ...state, token: action.token, }
     }
     case REMOVE_TOKEN: {

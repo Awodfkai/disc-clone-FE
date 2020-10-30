@@ -5,8 +5,6 @@ import channels from './reducers/channels';
 import authentication from './reducers/authentication'
 
 const reducers = combineReducers({
-  messages,
-  channels,
   authentication,
 })
 
