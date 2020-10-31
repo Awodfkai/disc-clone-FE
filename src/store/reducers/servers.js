@@ -25,8 +25,23 @@ export const createServer = (name, user_id) => async dispatch => {
     body: JSON.stringify({ name, user_id }),
   })
   if (response.ok) {
-    const { server } = await response.json();
-    dispatch(addServers(server))
+    const server = await response.json();
+    
+    const res = await fetch(`${baseUrl}/serverMembers/${user_id}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+    const resServers = await res.json();
+    
+    
+    dispatch(addServers(resServers))
+  }
+}
+
+export const setCurrent = (server) => async dispatch => {
+  console.log('creating setcurrentserver action')
+  return {
+    type: SET_CURRENT_SERVER,
+    server
   }
 }
 
@@ -36,8 +51,10 @@ const serversReducer = (state=initialState, action) => {
   Object.freeze(state);
   switch(action.type) {
     case ADD_SERVERS:
+      console.log('adding servers...')
       return { ...state, servers: action.servers}
     case SET_CURRENT_SERVER:
+      console.log('setting current server to ' + action.server)
       return {...state, currentServer: action.server };
     case ADD_JOINED_SERVER:
       return { ...state, joinedServers: action.server };

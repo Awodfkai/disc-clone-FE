@@ -53,6 +53,7 @@ const LogIn = (props) => {
     e.preventDefault();
     console.log('logging in...')
     props.logIn(username, password)
+    props.onChange(false)
     // const login = async (username, password) => {
     //   try {
     //     const res = await fetch('http://localhost:8000/api/user/log-in',
@@ -72,9 +73,9 @@ const LogIn = (props) => {
     // login(username, password);
   }
   
-  if (props.token) {
-    props.onChange(false)
-  }
+  // if (props.token) {
+    
+  // }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid'
+import { Socket } from 'socket.io-client';
+
 import LogIn from './components/LogIn'
 import MessageList from './components/MessageList';
 import SendMessageForm from './components/SendMessageForm';
-
 import Sidebar from './components/Sidebar'
-import { Socket } from 'socket.io-client';
+import ServerPage from './components/ServerPage'
 import { loadToken } from './store/reducers/authentication';
 
 const PrivateRoute = (props) => {
@@ -45,6 +46,15 @@ const App = (props) => {
       )
     }
   }
+
+  const renderServerView = () => {
+    if(currentServer) {
+      return (
+        <ServerPage server={currentServer}/>
+      )
+    }
+  }
+
   if(needLogin){
     return(
       <main>
@@ -54,14 +64,14 @@ const App = (props) => {
   }
   return (
     <Grid container spacing={1}>
-      <Grid container item xs={1}>
+      <Grid container item xs={2}>
         <Sidebar />
       </Grid>
       <Grid container item xs={2}>
-        {/* {renderMessageView()} */}
-      </Grid>
-      <Grid container item xs={6}>
         <div className='test' />
+      </Grid>
+      <Grid container item xs={8}>
+        {renderServerView()}
       </Grid>
       <Grid container item xs={2}>
         <div className='test' />

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { List, ListItem, ListItemText, ListItemIcon, Divider, Menu, MenuItem, Button } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField';
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks'
 
 import { baseUrl } from '../config';
-import { createServer, addServers } from '../store/reducers/servers'
+import { createServer, addServers, setCurrent } from '../store/reducers/servers'
 
 const ADD_JOINED_SERVER = 'ADD_JOINED_SERVER';
 const SET_CURRENT_SERVER = 'SET_CURRENT_CHANNEL'; 
@@ -17,7 +17,9 @@ const Sidebar = (props) => {
   const servers = useSelector((state) => state.servers.servers);
   const currentServer = useSelector((state) => state.servers.currentServer)
   const popupState = usePopupState({variant:'popover', popupId:'demoMenu'})
-  
+  const serverElement = useRef(null);
+
+
   useEffect(() => {
     (async () => {
       try{
@@ -57,18 +59,27 @@ const Sidebar = (props) => {
   }
   
   //set currentServer to server clicked on
-  const joinServer = (server) => {
-    dispatch()
+  const setCurrentServer = (server) => {
+    console.log('setCurrentServer')
+    console.log(server)
+    dispatch(setCurrent(server))
   }
   //renders fetched servers
   const renderServers = (servers) => {
-    return servers.map( (server) => {
-      return (
-        <ListItem button key={server.id} onClick = {() => joinServer(server.id)}>
-          <ListItemText primary={server.name}/>
-        </ListItem>
-      )
-    })
+    if(servers){
+      return servers.map( (server) => {
+        return (
+          <ListItem ref={serverElement} button key={server.id} onClick = {() => setCurrentServer(server)}>
+            <ListItemText primary={server.name}/>
+          </ListItem>
+        )
+      })
+    }
+    return (
+    <ListItem>
+      <ListItemText primary={'no servers found'}/>
+    </ListItem>
+    )
   }
 
   return (
@@ -109,6 +120,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setCurrent: (server) => dispatch(setCurrent(server)),
     createServer: (name, user_id) => dispatch(createServer(name, user_id))
   };
 };
