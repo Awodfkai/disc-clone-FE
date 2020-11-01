@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -16,6 +16,7 @@ import Container from '@material-ui/core/Container';
 import { json } from 'body-parser';
 
 import {login} from '../store/reducers/authentication'
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,6 +42,7 @@ const LogIn = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('')
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const updateUsername = e => {
     setUsername(e.target.value)
@@ -49,11 +51,24 @@ const LogIn = (props) => {
     setPassword(e.target.value)
   }
 
-  const onSubmit = e => {
+  const checkLoggedIn = () => {
+    if (props.token) {
+      props.onChange(false)
+    }else{
+      alert('Incorrect Login Information')
+    }
+  }
+
+  const onSubmit = async e => {
     e.preventDefault();
     console.log('logging in...')
-    props.logIn(username, password)
-    props.onChange(false)
+    const loggedIn = await props.logIn(username, password)
+    if(!loggedIn){
+      props.onChange(false);
+    }else{
+      alert('Incorrect Login Information')
+    }
+
     // const login = async (username, password) => {
     //   try {
     //     const res = await fetch('http://localhost:8000/api/user/log-in',
@@ -72,10 +87,7 @@ const LogIn = (props) => {
     // }
     // login(username, password);
   }
-  
-  // if (props.token) {
-    
-  // }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

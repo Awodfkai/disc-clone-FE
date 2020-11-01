@@ -1,56 +1,70 @@
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment'
+// import React, { useEffect, useRef } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import moment from 'moment'
+// import { response } from 'express';
 
-const MessageList = () => {
-  const currentChannel = useSelector(state => state.channels.currentChannel)
-  const messages = useSelector(state => state.messages[currentChannel]);
-  const dispatch = useDispatch();
-  const messageElement = useRef(null);
+// import { baseUrl } from '../config';
+// import { setMessages } from '../store/reducers/messages'
 
-  useEffect(() => {
-    if(messageElement.current){
-      messageElement.current.scrollIntoView();
-    }
-  })
+// const MessageList = () => {
+//   const currentChannel = useSelector(state => state.channels.currentChannel)
+//   const messages = useSelector(state => state.messages[currentChannel]);
+//   const dispatch = useDispatch();
+//   const messageElement = useRef(null);
 
-  if(!currentChannel){
-    return;
-  }
-  // (async () => {
-  //   try {
-  //     //fetch messages
-  //   }catch(e){
-  //     console.error(e);
-  //   }
-  // },[currentChannel, dispatch]);
+//   useEffect(() => {
+//     if(messageElement.current){
+//       messageElement.current.scrollIntoView();
+//     }
+//   })
 
-  // if(!currentChannel){
-  //   return null;
-  // }
+//   useEffect(() => {
+//     if(!currentChannel){
+//       return;
+//     }
+//     (async () => {
+//       try {
+//         const token = localStorage.getItem('tokenkey');
+//         const res = await fetch(`${baseUrl}/channel/${currentChannel}/messages`, {
+//           headers: { 'Authorization': `Bearer ${token}` }
+//         })
+//         if(!response.ok){
+//           throw new Error("Response not okay");
+//         }
+//         const messages = await res.json();
+//         console.log('messages: ', messages)
+//         dispatch(setMessages(messages, currentChannel));
+//       } catch (e) {
+//         console.error(e);
+//       }
+//     })()
+//   }, [currentChannel, dispatch])
+  
+//   if(!currentChannel){
+//     return null;
+//   }
+//   const renderMessages = messages => {
+//     if(!messages){
+//       return null;
+//     }
+//     return messages.map(message => {
+//       const date = moment(message.createdAt).format('hh:mm:ss');
+//       return(
+//         <li ref={messageElement} key={message.id}>
+//           <h4>
+//             Test name
+//             <span>{date}</span>
+//           </h4>
+//           <p>{message.message}</p>
+//         </li>
+//       )
+//     })
+//   }
+//   return (
+//     <ul>
+//       {renderMessages(messages)}
+//     </ul>
+//   )
+// }
 
-  const renderMessages = messages => {
-    if(!messages){
-      return null;
-    }
-    return messages.map(message => {
-      const date = moment(message.createdAt).format('hh:mm:ss');
-      return(
-        <li ref={messageElement} key={message.id}>
-          <h4>
-            Test name
-            <span>{date}</span>
-          </h4>
-          <p>{message.message}</p>
-        </li>
-      )
-    })
-  }
-  return (
-    <ul>
-      {renderMessages(messages)}
-    </ul>
-  )
-}
-
-export default MessageList;
+// export default MessageList;

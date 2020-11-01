@@ -8,17 +8,15 @@ import { baseUrl } from '../config';
 import { createServer, addServers, setCurrent } from '../store/reducers/servers'
 
 const ADD_JOINED_SERVER = 'ADD_JOINED_SERVER';
-const SET_CURRENT_SERVER = 'SET_CURRENT_CHANNEL'; 
+const SET_CURRENT_SERVER = 'SET_CURRENT_SERVER'; 
 const ADD_SERVER = 'ADD_SERVER';
 
 const Sidebar = (props) => {
   const [name, setName] = useState('')
   const dispatch = useDispatch();
   const servers = useSelector((state) => state.servers.servers);
-  const currentServer = useSelector((state) => state.servers.currentServer)
   const popupState = usePopupState({variant:'popover', popupId:'demoMenu'})
   const serverElement = useRef(null);
-
 
   useEffect(() => {
     (async () => {
@@ -31,7 +29,6 @@ const Sidebar = (props) => {
         const resServers = await res.json();
         console.log('servers: ',resServers)
         dispatch(addServers(resServers));
-        console.log('store servers: ', servers)
       }catch(e){
         console.error(e);
       }
@@ -49,26 +46,23 @@ const Sidebar = (props) => {
     const user_id = localStorage.getItem('user_id')
     props.createServer(name, user_id)
   }
+  
+  //set currentServer to server clicked on
+  const setCurrentServer = (server) => {
+    console.log('setCurrentServer');
+    console.log(server);
+    dispatch(setCurrent(server));
+  }
 
   function ListItemLink(props) {
     return <ListItem button component="a" {...props} />;
   }
   
-  const getServers = () => {
-    //fetch servers? where to put
-  }
-  
-  //set currentServer to server clicked on
-  const setCurrentServer = (server) => {
-    console.log('setCurrentServer')
-    console.log(server)
-    dispatch(setCurrent(server))
-  }
   //renders fetched servers
   const renderServers = (servers) => {
     if(servers){
       return servers.map( (server) => {
-        return (
+        return (  
           <ListItem ref={serverElement} button key={server.id} onClick = {() => setCurrentServer(server)}>
             <ListItemText primary={server.name}/>
           </ListItem>
@@ -85,6 +79,10 @@ const Sidebar = (props) => {
   return (
     <div>
       <List component="nav">
+        <ListItem divider>
+          <ListItemText primary={'Servers'} />
+        </ListItem>
+
         {renderServers(servers)}
 
         <ListItem button {...bindTrigger(popupState)}>

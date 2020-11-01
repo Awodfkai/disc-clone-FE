@@ -11,6 +11,8 @@ const composeEnhancers = composeWithDevTools({ trace: true })
 const reducers = combineReducers({
   authentication,
   servers,
+  channels,
+  messages
 })
 
 const configureStore = () => {

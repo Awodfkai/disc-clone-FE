@@ -43,7 +43,9 @@ export const login = (username, password) => async dispatch => {
     localStorage.setItem(TOKEN_KEY, token.token)
     localStorage.setItem('user_id', user.id)
     dispatch(setToken(token))
+    return false;
   }
+  return true;
 }
 
 // thunk

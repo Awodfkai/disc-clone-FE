@@ -1,12 +1,12 @@
 import { baseUrl } from '../../config'
 
 const ADD_JOINED_SERVER = 'ADD_JOINED_SERVER';
-const SET_CURRENT_SERVER = 'SET_CURRENT_CHANNEL';
+const SET_CURRENT_SERVER = 'SET_CURRENT_SERVER';
 const ADD_SERVERS = 'ADD_SERVERS';
 
 const initialState = {
   servers: [],
-  joinedServers: []
+  currentServer: null
 }
 
 export const addServers = (servers) => {
@@ -37,8 +37,7 @@ export const createServer = (name, user_id) => async dispatch => {
   }
 }
 
-export const setCurrent = (server) => async dispatch => {
-  console.log('creating setcurrentserver action')
+export const setCurrent = (server) => {
   return {
     type: SET_CURRENT_SERVER,
     server
@@ -51,10 +50,8 @@ const serversReducer = (state=initialState, action) => {
   Object.freeze(state);
   switch(action.type) {
     case ADD_SERVERS:
-      console.log('adding servers...')
       return { ...state, servers: action.servers}
     case SET_CURRENT_SERVER:
-      console.log('setting current server to ' + action.server)
       return {...state, currentServer: action.server };
     case ADD_JOINED_SERVER:
       return { ...state, joinedServers: action.server };

@@ -49,8 +49,9 @@ const App = (props) => {
 
   const renderServerView = () => {
     if(currentServer) {
+      console.log(currentServer)
       return (
-        <ServerPage server={currentServer}/>
+        <ServerPage />
       )
     }
   }
@@ -66,9 +67,6 @@ const App = (props) => {
     <Grid container spacing={1}>
       <Grid container item xs={2}>
         <Sidebar />
-      </Grid>
-      <Grid container item xs={2}>
-        <div className='test' />
       </Grid>
       <Grid container item xs={8}>
         {renderServerView()}
