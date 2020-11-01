@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid'
 import { Socket } from 'socket.io-client';
 
 import LogIn from './components/LogIn'
-import MessageList from './components/MessageList';
 import SendMessageForm from './components/SendMessageForm';
 import Sidebar from './components/Sidebar'
 import ServerPage from './components/ServerPage'
@@ -35,23 +34,12 @@ const App = (props) => {
   //   })
   // }
   
-  const renderMessageView = () => {
-    const currentChannel = false;
-    if(currentChannel) {
-      return (
-        <div className='message-view'>
-          <MessageList />
-          {/* <SendMessageForm onSend={onSend} /> */}
-        </div>
-      )
-    }
-  }
 
   const renderServerView = () => {
     if(currentServer) {
       console.log(currentServer)
-      return (
-        <ServerPage />
+      return (  
+        <ServerPage socket={props.socket}/>
       )
     }
   }

@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import io from 'socket.io-client';
+
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import configureStore from './store/store'
+import { noApiUrl } from './config'
 
-import io from 'socket.io-client';
 
-// const socket = io.connect('http://localhost:3000');
-const socket = '';
+const socket = io.connect('http://localhost:3000');
 
-// socket.on('error', (err) => {
-//   console.error(err);
-// })
+socket.on('error', (err) => {
+  console.error(err);
+})
 
 const store = configureStore();
 
