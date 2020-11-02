@@ -108,7 +108,6 @@ const Sidebar = (props) => {
                 label="Server Name"
                 name="Name"
                 autoFocus
-                anchorOrigin={{horizontal:'left', vertical:'bottom'}}
               />
             </form>
           </MenuItem>
