@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { json } from 'body-parser';
 
-import {login} from '../store/reducers/authentication'
+import {login, setUser} from '../store/reducers/authentication'
 import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,6 +54,7 @@ const LogIn = (props) => {
   const checkLoggedIn = () => {
     if (props.token) {
       props.onChange(false)
+      dispatch(setUser(username))
     }else{
       alert('Incorrect Login Information')
     }

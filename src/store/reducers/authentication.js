@@ -3,6 +3,7 @@ import { baseUrl } from '../../config'
 const SET_TOKEN = 'SET_TOKEN';
 const REMOVE_TOKEN = 'REMOVE_TOKEN'
 const TOKEN_KEY = 'tokenkey'
+const SET_USERNAME = 'SET_USERNAME';
 
 // action creator
 export const setToken = (token) => {
@@ -15,6 +16,13 @@ export const setToken = (token) => {
 // action creator
 export const loseToken = () => {
   return { type: REMOVE_TOKEN }
+}
+
+export const setUser = (username) => {
+  return {
+    type: SET_USERNAME,
+    username
+  }
 }
 
 export const logout = () => {
@@ -43,6 +51,7 @@ export const login = (username, password) => async dispatch => {
     localStorage.setItem(TOKEN_KEY, token.token)
     localStorage.setItem('user_id', user.id)
     dispatch(setToken(token))
+    dispatch(setUser(username))
     return false;
   }
   return true;
@@ -69,6 +78,8 @@ export default function reducer(state = {}, action) {
       delete newState.token
       return newState
     }
+    case SET_USERNAME:
+      return { ...state, username: action.username}
     default:
       return state
   }

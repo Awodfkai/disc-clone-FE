@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks'
 
 import { baseUrl } from '../config';
-import { createChannel, addChannels, setCurrent } from '../store/reducers/channels'
+import { createChannel, addChannels, setCurrentChannel } from '../store/reducers/channels'
 
 
 const ChannelNav = (props) => {
@@ -22,7 +22,7 @@ const ChannelNav = (props) => {
   }
 
   const joinChannel = (channel) => {
-    props.setCurrent(channel)
+    props.setCurrentChannel(channel)
   }
 
   const updateName = e => {
@@ -38,7 +38,6 @@ const ChannelNav = (props) => {
           headers: { 'Authorization': `Bearer ${token}` }
         })
         const resChannels = await res.json();
-        console.log('Channels: ', resChannels)
         dispatch(addChannels(resChannels));
       } catch (e) {
         console.error(e);
@@ -83,7 +82,6 @@ const ChannelNav = (props) => {
                 variant="outlined"
                 margin="normal"
                 required
-                fullWidth
                 id="name"
                 label="Channel Name"
                 name="Name"
@@ -105,7 +103,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrent: (channel) => dispatch(setCurrent(channel)),
+    setCurrentChannel: (channel) => dispatch(setCurrentChannel(channel)),
     createChannel: (name, server_id) => dispatch(createChannel(name, server_id))
   };
 };

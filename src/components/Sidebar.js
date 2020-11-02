@@ -1,17 +1,23 @@
 import React, {useEffect, useState, useRef} from "react";
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { List, ListItem, ListItemText, ListItemIcon, Divider, Menu, MenuItem, Button } from '@material-ui/core'
+import { List, ListItem, ListItemText, Menu, MenuItem, Paper, ListItemIcon, Divider, Button } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField';
+// import Fade from '@material-ui/core/Fade'
+import { makeStyles } from '@material-ui/core/styles';
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks'
 
 import { baseUrl } from '../config';
 import { createServer, addServers, setCurrent } from '../store/reducers/servers'
 
-const ADD_JOINED_SERVER = 'ADD_JOINED_SERVER';
-const SET_CURRENT_SERVER = 'SET_CURRENT_SERVER'; 
-const ADD_SERVER = 'ADD_SERVER';
+const useStyles = makeStyles({
+  root: {
+    background: 'lightgrey',
+  },
+  
+});
 
 const Sidebar = (props) => {
+  const classes = useStyles()
   const [name, setName] = useState('')
   const dispatch = useDispatch();
   const servers = useSelector((state) => state.servers.servers);
@@ -77,8 +83,8 @@ const Sidebar = (props) => {
   }
 
   return (
-    <div>
-      <List component="nav">
+    <div className={classes.root}>
+      <List component="nav" height="100%" bgcolor="grey.300">
         <ListItem divider>
           <ListItemText primary={'Servers'} />
         </ListItem>
@@ -88,7 +94,10 @@ const Sidebar = (props) => {
         <ListItem button {...bindTrigger(popupState)}>
           <ListItemText>Add Server</ListItemText>
         </ListItem>
-        <Menu {...bindMenu(popupState)}>
+        <Menu
+          {...bindMenu(popupState)}
+
+        >
           <MenuItem>
             <form onSubmit={onSubmit}>
               <TextField
@@ -96,11 +105,11 @@ const Sidebar = (props) => {
                 variant="outlined"
                 margin="normal"
                 required
-                fullWidth
                 id="name"
                 label="Server Name"
                 name="Name"
                 autoFocus
+                anchorOrigin={{horizontal:'left', vertical:'bottom'}}
               />
             </form>
           </MenuItem>

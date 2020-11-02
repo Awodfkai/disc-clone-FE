@@ -1,6 +1,5 @@
 import { baseUrl } from '../../config'
 
-const ADD_JOINED_SERVER = 'ADD_JOINED_SERVER';
 const SET_CURRENT_SERVER = 'SET_CURRENT_SERVER';
 const ADD_SERVERS = 'ADD_SERVERS';
 
@@ -53,8 +52,6 @@ const serversReducer = (state=initialState, action) => {
       return { ...state, servers: action.servers}
     case SET_CURRENT_SERVER:
       return {...state, currentServer: action.server };
-    case ADD_JOINED_SERVER:
-      return { ...state, joinedServers: action.server };
     default:
       return state;
   }

@@ -17,6 +17,13 @@ export const addChannels = (channels) => {
   }
 }
 
+export const addJoinedChannel = (channel) => {
+  return {
+    type: ADD_JOINED_CHANNEL,
+    channel
+  }
+}
+
 export const createChannel = (name, server_id) => async dispatch => {
   const token = localStorage.getItem('tokenkey');
   const response = await fetch(`${baseUrl}/channel/create`, {
@@ -25,7 +32,6 @@ export const createChannel = (name, server_id) => async dispatch => {
     body: JSON.stringify({ name, server_id }),
   })
   if (response.ok) {
-    const channel = await response.json();
 
     const res = await fetch(`${baseUrl}/channel/${server_id}`, {
       headers: { 'Authorization': `Bearer ${token}` }
@@ -35,7 +41,7 @@ export const createChannel = (name, server_id) => async dispatch => {
   }
 }
 
-export const setCurrent = (channel) => {
+export const setCurrentChannel = (channel) => {
   console.log('creating setcurrentchannel action')
   return {
     type: SET_CURRENT_CHANNEL,
@@ -53,7 +59,7 @@ const channelsReducer = (state = initialState, action) => {
       console.log('setting current channel...')
       return { ...state, currentChannel: action.channel };
     case ADD_JOINED_CHANNEL:
-      return { ...state, joinedChannels: action.channel };
+      return { ...state, joinedChannels: [...state.joinedChannels, action.channel] };
     default:
       return state;
   }
