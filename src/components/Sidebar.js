@@ -8,6 +8,7 @@ import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/ho
 
 import { baseUrl } from '../config';
 import { createServer, addServers, setCurrent } from '../store/reducers/servers'
+import { setCurrentChannel } from '../store/reducers/channels'
 
 const useStyles = makeStyles({
   root: {
@@ -58,6 +59,7 @@ const Sidebar = (props) => {
     console.log('setCurrentServer');
     console.log(server);
     dispatch(setCurrent(server));
+    dispatch(setCurrentChannel(null))
   }
 
   function ListItemLink(props) {
@@ -94,10 +96,7 @@ const Sidebar = (props) => {
         <ListItem button {...bindTrigger(popupState)}>
           <ListItemText>Add Server</ListItemText>
         </ListItem>
-        <Menu
-          {...bindMenu(popupState)}
-
-        >
+        <Menu {...bindMenu(popupState)}>
           <MenuItem>
             <form onSubmit={onSubmit}>
               <TextField

@@ -1,18 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField';
+import { Menu, MenuItem } from '@material-ui/core'
+import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks'
 import MessageList from './MessageList';
 import SendMessageForm from './SendMessageForm';
 import ChannelNav from './ChannelNav'
 import { addMessage } from '../store/reducers/messages'
 import { addJoinedChannel } from '../store/reducers/channels';
+import { baseUrl } from '../config';
 
 const ServerPage = ({socket}) => {
+  const [newUser, setNewUser] = useState('')
   const currentServer = useSelector(state => state.servers.currentServer)
   const currentChannel = useSelector(state => state.channels.currentChannel);
   const joinedChannels = useSelector(state => state.channels.joinedChannels)
   const username = useSelector(state => state.authentication.username)
   const dispatch = useDispatch()
+  const popupState = usePopupState({ variant: 'popover', popupId: 'demoMenu' })
+
+  const updateNewUser = (e) => {
+    setNewUser(e.target.value);
+  }
+
+  const onSubmit = async e => {
+    e.preventDefault();
+    try{
+      console.log(newUser)
+      const res = await fetch(`${baseUrl}/serverMembers/server/${currentServer.id}/user/${newUser}`, {
+        method: 'POST'
+      })
+    }catch(e){
+      console.error(e);
+    }
+  }
 
   useEffect(() => {
     if(currentChannel){
@@ -65,7 +88,25 @@ const ServerPage = ({socket}) => {
         {renderMessageView()}
       </Grid>
       <Grid container item xs={3} sm={2}>
-        <div className='test' />
+        <Button {...bindTrigger(popupState)}>
+          Invite User
+        </Button>
+        <Menu {...bindMenu(popupState)}>
+          <MenuItem>
+            <form onSubmit={onSubmit}>
+              <TextField
+                onChange={updateNewUser}
+                variant="outlined"
+                margin="normal"
+                required
+                id="name"
+                label="Username"
+                name="Name"
+                autoFocus
+              />
+            </form>
+          </MenuItem>
+        </Menu>
       </Grid>
     </Grid>
   )
