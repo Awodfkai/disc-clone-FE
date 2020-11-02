@@ -87,7 +87,7 @@ const ServerPage = ({socket}) => {
       <Grid container item xs={6} sm={8} direction={'column'} justify={'space-between'} alignItems={'stretch'}>
         {renderMessageView()}
       </Grid>
-      <Grid container item xs={3} sm={2}>
+      <Grid container item xs={3} sm={2} >
         <Button {...bindTrigger(popupState)}>
           Invite User
         </Button>
