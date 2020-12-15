@@ -18,7 +18,7 @@ export const addServers = (servers) => {
 export const createServer = (name, user_id) => async dispatch => {
   const token = localStorage.getItem('tokenkey');
   console.log('local storage token: ', token);
-  const response = await fetch(`${baseUrl}/server/create`, {
+  const response = await fetch(`${baseUrl}/serverMembers/server/create`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization':`Bearer ${token}` },
     body: JSON.stringify({ name, user_id }),

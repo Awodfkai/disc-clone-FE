@@ -52,7 +52,6 @@ const ServerPage = ({socket}) => {
     }
 
     socket.on(currentChannel, ( newMessage ) => {
-      debugger
       console.log('socket.on message value in ServerPage.js: ', newMessage)
       dispatch(addMessage( newMessage ))
     });

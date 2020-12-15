@@ -71,7 +71,7 @@ const MessageList = () => {
     return messages.map(message => {
       const date = moment(message.createdAt).format('hh:mm:ss');
       return(
-        <li ref={messageElement} key={message.id}>
+        <li key={message.id} ref={messageElement}>
           <div style={{display: "flex", flexDirection:'row', alignItems:'center', paddingBottom:'0px'}}>
             <h4 style={{paddingRight:'5px'}}>
              {message.username}
